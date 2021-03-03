@@ -1,28 +1,82 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="container-fluid">
+    <header>
+      <nav class="navbar navbar-light bg-dark">
+        <div class="container-fluid">
+           <span class="navbar-brand mb-0">{{ appTitle }}</span>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div>
+          <h1 class="title mx-auto py-4 mt-5 h1">{{ appTitle }}</h1>
+          <SearchBar @termChange="onTermChange"></SearchBar>
+      </div>
+      <div>
+          <VideoDetail :video="selectedVideo" class="mt-5"/>
+          <VideoList :videos="videos" @videoSelect="onVideoSelect" class="mt-5"></VideoList>
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
+import SearchBar from "./components/SearchBar";
+import VideoList from "./components/VideoList";
+import VideoDetail from "./components/VideoDetail";
+
+
+const API_KEY = 'AIzaSyBK3hXN8_-3EO6NlKCROaDjON-V5Q5Bm6w';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SearchBar,
+    VideoList,
+    VideoDetail
+  },
+  data() {
+    return {
+      appTitle: 'YouTube Search',
+      videos: [],
+      selectedVideo: null
+    };
+  },
+  methods: {
+    onVideoSelect(video) {
+      this.selectedVideo = video;  
+    },
+    onTermChange(searchTerm) {
+      axios.get('https://www.googleapis.com/youtube/v3/search', {
+        params: {
+          key: API_KEY,
+          type: 'video',
+          part: 'snippet',
+          q: searchTerm
+        }
+      }).then(response => {this.videos = response.data.items});
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
+  .container-fluid {
+    margin: 0%;
+  }
+  h1 {
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .navbar-brand {
+    color: white;
+  }
+
+  .navbar-brand:hover {
+    color: white;
+    cursor: pointer;
+  }
+
 </style>

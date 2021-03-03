@@ -2,8 +2,8 @@
   <div id="app" class="container-fluid">
     <header>
       <nav class="navbar navbar-light bg-dark">
-        <div class="container-fluid">
-           <span class="navbar-brand mb-0">{{ appTitle }}</span>
+        <div class="container-fluid brand-div">
+           <span class="navbar-brand">{{ appTitle }}</span>
         </div>
       </nav>
     </header>
@@ -63,7 +63,10 @@ export default {
 
 <style scoped>
   .container-fluid {
-    margin: 0%;
+    padding: 0%
+  }
+  .container-fluid.brand-div {
+    padding-left: 1rem;
   }
   h1 {
     max-width: 400px;

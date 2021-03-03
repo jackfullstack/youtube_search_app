@@ -1,6 +1,6 @@
 # YouTube Search
 
-A app that consumes the Youtube API in order to search and display youtube videos in an uncluttered fashion.
+An app that consumes the Youtube API in order to search and display youtube videos in an uncluttered fashion.
 
 Acc Criteria:
 1. User can enter search term in searchbar to retrieve a relavant list of videos from Youtube
